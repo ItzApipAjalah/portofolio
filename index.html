@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen transition-all duration-500">
+  <div class="absolute top-4 right-4">
+    <button id="themeToggle" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-md">
+      <span id="themeIcon">&#9728;&#xFE0E;</span>
+      <span id="themeText" class="ml-2">Toggle Theme</span>
+    </button>
+  </div>
+  <div class="text-center">
+    <h1 id="pageTitle" class="text-3xl font-semibold mb-4">Coming Soon</h1>
+    <p class="text-lg mb-2">Our website is under construction.</p>
+    <p class="text-lg mb-8">We'll be here soon with our new awesome site. Stay tuned!</p>
+    <div id="countdown" class="bg-gray-200 p-4 rounded-md inline-block">
+      <p class="text-lg text-gray-800">Expected Release:</p>
+      <p id="countdownTimer" class="text-xl text-blue-500 font-semibold"></p>
+    </div>
+  </div>
+  <div id="fireflies"></div>
+<script src="src/js/script.js"></script>
+</body>
+</html>
