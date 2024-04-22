@@ -139,7 +139,7 @@ function updateData() {
                         imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
                         break;
                     default:
-                        largeImageElement.innerHTML = "";
+                        imageUrl = "https://w0.peakpx.com/wallpaper/778/9/HD-wallpaper-404-error-404-error-glitch-glitch.jpg";
                         break;
                 }
 
