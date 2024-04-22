@@ -203,14 +203,6 @@ setInterval(updateData, 5000);
 (window.setScroll = () => document.body.style.setProperty('--scroll', scrollY / innerHeight))();
 ['scroll', 'resize'].forEach(e => addEventListener(e, setScroll));
 
-const bg = document.querySelector('#bg');
-
-addEventListener('touchstart', () => bg.style.setProperty('--multiplier', '0'));
-addEventListener('mousemove', ({ clientX, clientY }) => {
-    bg.style.setProperty('--tx', `${20 * (clientX - innerWidth / 2) / innerWidth}px`);
-    bg.style.setProperty('--ty', `${20 * (clientY - innerHeight / 2) / innerHeight}px`);
-});
-
 ['mouseenter', 'mouseleave'].forEach(e => document.addEventListener(e, () => {
     if (e === 'mouseleave') bg.removeAttribute('style');
     bg.style.transition = 'transform .1s linear';
@@ -235,8 +227,7 @@ window.addEventListener('scroll', function() {
     var bg = document.getElementById('bg');
     var scrollPos = window.scrollY;
 
-    // Tentukan ambang batas scroll di sini
-    var threshold = 180; // Anda dapat menyesuaikan ambang ini sesuai keinginan
+    var threshold = 180;
 
     if (scrollPos > threshold) {
         bg.classList.add('blur');
@@ -244,3 +235,59 @@ window.addEventListener('scroll', function() {
         bg.classList.remove('blur');
     }
 });
+
+var audio = document.getElementById("myAudio");
+  audio.volume = 0.5; // Set volume to 50% (0.0 to 1.0)
+
+  var isPlaying = true;
+
+  function toggleMusic() {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+    } else {
+      audio.play();
+      isPlaying = true;
+    }
+  }
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "1") {
+      toggleMusic();
+    }
+  });
+
+  function playAudio() {
+    audio.play().catch(function(error) {
+      // Autoplay was prevented, possibly due to browser restrictions
+      // You can handle this situation here, e.g., by displaying a play button for the user
+      console.error("Autoplay prevented: " + error);
+    });
+  }
+
+  // Call the playAudio function when the page loads
+  window.addEventListener("load", playAudio);
+
+  var audio = document.getElementById("myAudio");
+  
+  // Function to show Toastr alert when music is loading
+  audio.addEventListener('loadstart', function() {
+    toastr.info('Music Sedang memuat');
+  });
+  
+  // Function to show Toastr alert when music starts playing
+  audio.addEventListener('play', function() {
+    toastr.info('Press 1 to toggle music on/off');
+  });
+
+  // Function to play audio
+  function playAudio() {
+    audio.play().catch(function(error) {
+      // Autoplay was prevented, possibly due to browser restrictions
+      // You can handle this situation here
+      console.error("Autoplay prevented: " + error);
+    });
+  }
+
+  // Call playAudio function when the page loads
+  window.addEventListener("load", playAudio);

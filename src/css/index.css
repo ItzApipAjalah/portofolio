@@ -18,7 +18,7 @@
 }
 
 .blur {
-    filter: blur(10px); /* Menggunakan efek blur */
+    filter: blur(8px); /* Menggunakan efek blur */
 }
 
 
@@ -27,6 +27,7 @@ body {
     margin: 0 auto;
     min-width: 320px;
     max-width: min(1280px, 100% - 100px);
+    
 }
 
 @media (width < 880px) {
