@@ -1,4 +1,4 @@
-const username = "ItzApipAjalah"; // Ganti dengan nama pengguna GitHub Anda
+const username = "ItzApipAjalah"; 
     
 async function fetchGitHubProjects(username) {
     try {
@@ -35,7 +35,7 @@ function createProjectElement(project) {
 
     const colorElement = document.createElement("div");
     colorElement.classList.add("color");
-    colorElement.style.backgroundColor = "#e42"; // Ganti dengan warna yang sesuai
+    colorElement.style.backgroundColor = "#e42"; 
 
     const langTextElement = document.createTextNode(project.language || "(Unknown)");
     langElement.appendChild(colorElement);
@@ -57,10 +57,8 @@ async function renderProjects() {
     const projectsContainer = document.getElementById("projects-container");
     const projects = await fetchGitHubProjects(username);
 
-    // Urutkan proyek-proyek berdasarkan waktu terakhir diperbarui (diurutkan secara descending)
     projects.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
 
-    // Ambil lima proyek pertama
     const firstFiveProjects = projects.slice(0, 5);
 
     firstFiveProjects.forEach(project => {
@@ -71,7 +69,6 @@ async function renderProjects() {
 
 
 renderProjects();
-// Fungsi untuk mengambil dan memperbarui data dari API
 function updateData() {
     fetch('https://api.lanyard.rest/v1/users/481734993622728715')
     .then(response => response.json())
@@ -88,41 +85,28 @@ function updateData() {
         const status = data.data.discord_status;
         const listeningToSpotify = data.data.listening_to_spotify;
 
-        // Menyisipkan username ke dalam elemen HTML
         nameElement.innerText = username;
-        // Menyisipkan status ke dalam elemen HTML
         statusElement.innerText = status;
 
         if (listeningToSpotify) {
             const albumName = data.data.spotify.album;
             const albumArtUrl = data.data.spotify.album_art_url;
 
-            // Menyisipkan kegiatan ke dalam elemen HTML
-            // Menyisipkan detail ke dalam elemen HTML
             detailsElement.innerText = "Listening To " + albumName;
-            // Menyisipkan detail2 ke dalam elemen HTML
             details2Element.innerText = "By " + albumName;
 
-            // Membuat elemen gambar baru
             const imgElement = document.createElement("img");
-            // Mengatur atribut src elemen gambar ke URL gambar album Spotify
             imgElement.setAttribute("src", albumArtUrl);
-            // Menambahkan properti CSS untuk mengatur ukuran gambar
-            imgElement.style.width = "80px"; // Ganti dengan lebar yang diinginkan
-            imgElement.style.height = "80px"; // Ganti dengan tinggi yang diinginkan
-            // Menambahkan elemen gambar ke dalam elemen HTML large_image
+            imgElement.style.width = "80px"; 
+            imgElement.style.height = "80px"; 
             largeImageElement.innerHTML = ""; // Clear sebelum menambahkan gambar baru
             largeImageElement.appendChild(imgElement);
         } else {
-            // Jika tidak sedang mendengarkan Spotify
             const activities = data.data.activities;
             if (activities.length > 0) {
-                // Ambil nama kegiatan pertama
                 const detailsName = activities[0].name;
-                // Menyisipkan kegiatan ke dalam elemen HTML dengan menambahkan "Playing"
                 detailsElement.innerText = "Playing " + detailsName;
                 
-                // Taruh URL gambar berdasarkan nama kegiatan
                 let imageUrl = "";
                 switch (detailsName) {
                     case "Visual Studio Code":
@@ -139,7 +123,6 @@ function updateData() {
                         break;
                 }
 
-                // Jika ada URL gambar yang sesuai, tambahkan gambar ke dalam elemen HTML large_image
                 if (imageUrl !== "") {
                     const imgElement = document.createElement("img");
                     imgElement.setAttribute("src", imageUrl);
@@ -149,7 +132,6 @@ function updateData() {
                     largeImageElement.appendChild(imgElement);
                 }
                 
-                // Kosongkan elemen detail2
                 details2Element.innerText = "";
                 // Ambil state dan details dari kegiatan pertama
                 const state = activities[0].state;
@@ -159,7 +141,6 @@ function updateData() {
                 // Menyisipkan details ke dalam elemen HTML
                 timestampElement.innerText = details;
             } else {
-                // Jika tidak ada kegiatan, kosongkan semua elemen
                 activityElement.innerText = "";
                 detailsElement.innerText = "";
                 details2Element.innerText = "";
@@ -170,39 +151,6 @@ function updateData() {
     })
     .catch(error => console.error('Error fetching data:', error));
 }
-
-const accessToken = "f2112df76d10484598e2e98dca546ce9"; // Token akses yang telah Anda dapatkan dari pengguna
-const clientId = "8f2db39effc3473a91027cc907031475";
-
-fetch('https://api.spotify.com/v1/me/player/currently-playing', {
-  headers: {
-    'Authorization': `Bearer ${accessToken}`
-  }
-})
-.then(response => response.json())
-.then(data => {
-  // Di sini Anda dapat memproses data lagu yang sedang diputar
-  console.log(data);
-})
-.catch(error => console.error('Error fetching currently playing song:', error));
-
-fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-        'Authorization': `Basic ${clientId}`,
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: 'grant_type=client_credentials'
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-});
-
-
-
-// Memanggil fungsi updateData secara berkala setiap 5 detik
-// Memanggil fungsi updateData untuk pertama kali saat halaman dimuat
 updateData();
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
