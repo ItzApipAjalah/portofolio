@@ -185,7 +185,18 @@ fetch('https://api.spotify.com/v1/me/player/currently-playing', {
 })
 .catch(error => console.error('Error fetching currently playing song:', error));
 
-
+fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Basic *credentials*',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: 'grant_type=client_credentials'
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+});
 
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
