@@ -189,7 +189,7 @@ fetch('https://api.spotify.com/v1/me/player/currently-playing', {
 fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
-        'Authorization': 'Basic ${clientId}',
+        'Authorization': `Basic ${clientId}`,
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: 'grant_type=client_credentials'
@@ -198,6 +198,7 @@ fetch('https://accounts.spotify.com/api/token', {
 .then(data => {
     console.log(data);
 });
+
 
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
