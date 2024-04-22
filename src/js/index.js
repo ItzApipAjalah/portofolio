@@ -230,3 +230,17 @@ document.querySelector('#arrow svg').addEventListener('click', () => {
         return 1 - Math.pow(1 - x, 3);
     }
 });
+
+window.addEventListener('scroll', function() {
+    var bg = document.getElementById('bg');
+    var scrollPos = window.scrollY;
+
+    // Tentukan ambang batas scroll di sini
+    var threshold = 180; // Anda dapat menyesuaikan ambang ini sesuai keinginan
+
+    if (scrollPos > threshold) {
+        bg.classList.add('blur');
+    } else {
+        bg.classList.remove('blur');
+    }
+});
