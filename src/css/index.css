@@ -4,6 +4,8 @@
     font-family: Inter, system-ui, sans-serif;
     background-image: url('../../src/image/bg2.webp');
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
