@@ -12,7 +12,7 @@ Di bawah ini adalah beberapa proyek yang telah saya kerjakan:
 
 1. **NoteApp** - Aplikasi mobile android yang di kembangkan menggunakan flutter.
    
-   <img src="https://github.com/ItzApipAjalah/portofolio/blob/main/ss1.jpg" alt="NotesApp" width="680" height="1000">
+   <img src="https://github.com/ItzApipAjalah/portofolio/blob/main/ss1.jpg" alt="NotesApp" width="480" height="720">
 
 2. **Tebak Gambar** - Game Tebak Gambar yang di buat menggunakan javascript , serta progress di simpain melalui localstorage(browser)
    
