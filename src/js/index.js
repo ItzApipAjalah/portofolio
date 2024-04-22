@@ -237,6 +237,8 @@ window.addEventListener('scroll', function() {
 });
 
 var audio = document.getElementById("myAudio");
+var firstTrack = "src/sound/odoriko.mp3";
+  var secondTrack = "src/sound/踊り子.mp3";
   audio.volume = 0.5; // Set volume to 50% (0.0 to 1.0)
 
   var isPlaying = true;
@@ -300,6 +302,21 @@ var audio = document.getElementById("myAudio");
   function playAudio() {
     audio.play().catch(handleAutoplayError);
   }
+
+  // Function to switch to the next music track
+  function switchTrack() {
+    if (audio.src.includes(firstTrack)) {
+      audio.src = secondTrack;
+    } else {
+      audio.src = firstTrack;
+    }
+    audio.play().catch(handleAutoplayError);
+  }
+
+  // Call switchTrack function when the current track ends
+  audio.addEventListener('ended', function() {
+    switchTrack();
+  });
 
   // Call playAudio function when the page loads
   window.addEventListener("load", playAudio);
