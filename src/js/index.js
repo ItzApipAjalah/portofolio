@@ -129,7 +129,7 @@ function updateData() {
                     case "Visual Studio Code":
                         imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
                         break;
-                    case "Valorant":
+                    case "VALORANT":
                         imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
                         break;
                     case "Roblox":
