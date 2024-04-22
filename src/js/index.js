@@ -181,7 +181,7 @@ function updateData() {
 updateData();
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
-setInterval(updateData, 5000);
+setInterval(updateData, 10000);
 
 (window.setScroll = () => document.body.style.setProperty('--scroll', scrollY / innerHeight))();
 ['scroll', 'resize'].forEach(e => addEventListener(e, setScroll));
