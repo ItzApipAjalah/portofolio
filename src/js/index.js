@@ -172,6 +172,7 @@ function updateData() {
 }
 
 const accessToken = "f2112df76d10484598e2e98dca546ce9"; // Token akses yang telah Anda dapatkan dari pengguna
+const clientId = "8f2db39effc3473a91027cc907031475";
 
 fetch('https://api.spotify.com/v1/me/player/currently-playing', {
   headers: {
@@ -188,7 +189,7 @@ fetch('https://api.spotify.com/v1/me/player/currently-playing', {
 fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
-        'Authorization': 'Basic ${accessToken}',
+        'Authorization': 'Basic ${clientId}',
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: 'grant_type=client_credentials'
