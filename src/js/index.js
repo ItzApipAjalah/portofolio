@@ -274,19 +274,27 @@ var audio = document.getElementById("myAudio");
   audio.addEventListener('loadstart', function() {
     toastr.info('Music Sedang memuat');
   });
-  
+
   // Function to show Toastr alert when music starts playing
   audio.addEventListener('play', function() {
     toastr.info('Press 1 to toggle music on/off');
   });
 
   // Function to play audio
-  function playAudio() {
-    audio.play().catch(function(error) {
-      // Autoplay was prevented, possibly due to browser restrictions
-      // You can handle this situation here
-      console.error("Autoplay prevented: " + error);
+ function handleAutoplayError(error) {
+    console.error("Autoplay prevented: " + error);
+    toastr.error('Music tidak dapat dimainkan otomatis. Klik di sini untuk menyalakan music.', '', {
+      onclick: function() {
+        audio.play().catch(function(error) {
+          console.error("Manual play failed: " + error);
+        });
+      }
     });
+  }
+
+  // Function to play audio
+  function playAudio() {
+    audio.play().catch(handleAutoplayError);
   }
 
   // Call playAudio function when the page loads
