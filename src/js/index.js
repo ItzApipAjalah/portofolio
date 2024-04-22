@@ -56,11 +56,19 @@ function createProjectElement(project) {
 async function renderProjects() {
     const projectsContainer = document.getElementById("projects-container");
     const projects = await fetchGitHubProjects(username);
-    projects.forEach(project => {
+
+    // Urutkan proyek-proyek berdasarkan waktu terakhir diperbarui (diurutkan secara descending)
+    projects.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+    // Ambil lima proyek pertama
+    const firstFiveProjects = projects.slice(0, 5);
+
+    firstFiveProjects.forEach(project => {
         const projectElement = createProjectElement(project);
         projectsContainer.appendChild(projectElement);
     });
 }
+
 
 renderProjects();
 
