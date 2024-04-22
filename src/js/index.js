@@ -91,9 +91,10 @@ function updateData() {
         if (listeningToSpotify) {
             const albumName = data.data.spotify.album;
             const albumArtUrl = data.data.spotify.album_art_url;
+            const artistName = data.data.spotify.artist;
 
             detailsElement.innerText = "Listening To " + albumName;
-            details2Element.innerText = "By " + albumName;
+            details2Element.innerText = "By " + artistName;
 
             const imgElement = document.createElement("img");
             imgElement.setAttribute("src", albumArtUrl);
