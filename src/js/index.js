@@ -277,18 +277,22 @@ var audio = document.getElementById("myAudio");
 
   // Function to show Toastr alert when music starts playing
   audio.addEventListener('play', function() {
-    toastr.info('Press 1 to toggle music on/off');
+    toastr.info('Press 1 to toggle music on/off', '', {
+      timeOut: 10000 // Set timeout to 10 seconds (10000 milliseconds)
+    });
   });
 
   // Function to play audio
- function handleAutoplayError(error) {
+  function handleAutoplayError(error) {
     console.error("Autoplay prevented: " + error);
     toastr.error('Music tidak dapat dimainkan otomatis. Klik di sini untuk menyalakan music.', '', {
       onclick: function() {
         audio.play().catch(function(error) {
           console.error("Manual play failed: " + error);
         });
-      }
+      },
+      timeOut: 0, // Set timeout to 0 to prevent auto hide
+      extendedTimeOut: 0 // Set extended timeout to 0 to prevent auto hide
     });
   }
 
