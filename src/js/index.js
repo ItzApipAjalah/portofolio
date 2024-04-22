@@ -71,94 +71,117 @@ async function renderProjects() {
 
 
 renderProjects();
+// Fungsi untuk mengambil dan memperbarui data dari API
+function updateData() {
+    fetch('https://api.lanyard.rest/v1/users/481734993622728715')
+    .then(response => response.json())
+    .then(data => {
+        const nameElement = document.getElementById("name");
+        const statusElement = document.getElementById("status");
+        const activityElement = document.getElementById("activity");
+        const detailsElement = document.getElementById("details");
+        const details2Element = document.getElementById("details2");
+        const timestampElement = document.getElementById("timestamp");
+        const largeImageElement = document.getElementById("large_image");
 
-// Mengambil elemen HTML yang akan diisi dengan data
-const nameElement = document.getElementById("name");
-const statusElement = document.getElementById("status");
-const activityElement = document.getElementById("activity");
-const detailsElement = document.getElementById("details");
-const details2Element = document.getElementById("details2");
-const largeImageElement = document.getElementById("large_image");
+        const username = data.data.discord_user.username;
+        const status = data.data.discord_status;
+        const listeningToSpotify = data.data.listening_to_spotify;
 
-fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-.then(response => response.json())
-.then(data => {
-// Memeriksa apakah pengguna sedang mendengarkan Spotify
-if (data.data.listening_to_spotify) {
-// Jika sedang mendengarkan, ambil nama album Spotify
-const artist = data.data.spotify.album;
-// Menggabungkan "Listening To " dengan nama album
-const details2Text = "By " + artist;
-// Menyisipkan kegiatan ke dalam elemen HTML
-details2Element.innerText = details2Text;
-} else {
-// Jika tidak sedang mendengarkan Spotify, kosongkan elemen HTML
-details2Element.innerText = "";
+        // Menyisipkan username ke dalam elemen HTML
+        nameElement.innerText = username;
+        // Menyisipkan status ke dalam elemen HTML
+        statusElement.innerText = status;
+
+        if (listeningToSpotify) {
+            const albumName = data.data.spotify.album;
+            const albumArtUrl = data.data.spotify.album_art_url;
+
+            // Menyisipkan kegiatan ke dalam elemen HTML
+            activityElement.innerText = "Listening To " + albumName;
+            // Menyisipkan detail ke dalam elemen HTML
+            detailsElement.innerText = "Listening To " + albumName;
+            // Menyisipkan detail2 ke dalam elemen HTML
+            details2Element.innerText = "By " + albumName;
+
+            // Membuat elemen gambar baru
+            const imgElement = document.createElement("img");
+            // Mengatur atribut src elemen gambar ke URL gambar album Spotify
+            imgElement.setAttribute("src", albumArtUrl);
+            // Menambahkan properti CSS untuk mengatur ukuran gambar
+            imgElement.style.width = "80px"; // Ganti dengan lebar yang diinginkan
+            imgElement.style.height = "80px"; // Ganti dengan tinggi yang diinginkan
+            // Menambahkan elemen gambar ke dalam elemen HTML large_image
+            largeImageElement.innerHTML = ""; // Clear sebelum menambahkan gambar baru
+            largeImageElement.appendChild(imgElement);
+        } else {
+            // Jika tidak sedang mendengarkan Spotify
+            const activities = data.data.activities;
+            if (activities.length > 0) {
+                // Ambil nama kegiatan pertama
+                const detailsName = activities[0].name;
+                // Menyisipkan kegiatan ke dalam elemen HTML dengan menambahkan "Playing"
+                detailsElement.innerText = "Playing " + detailsName;
+                
+                // Taruh URL gambar berdasarkan nama kegiatan
+                let imageUrl = "";
+                switch (detailsName) {
+                    case "Visual Studio Code":
+                        imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
+                        break;
+                    case "Valorant":
+                        imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
+                        break;
+                    case "Roblox":
+                        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
+                        break;
+                    default:
+                        largeImageElement.innerHTML = "";
+                        break;
+                }
+
+                // Jika ada URL gambar yang sesuai, tambahkan gambar ke dalam elemen HTML large_image
+                if (imageUrl !== "") {
+                    const imgElement = document.createElement("img");
+                    imgElement.setAttribute("src", imageUrl);
+                    imgElement.style.width = "80px";
+                    imgElement.style.height = "80px";
+                    largeImageElement.innerHTML = "";
+                    largeImageElement.appendChild(imgElement);
+                }
+                
+                // Kosongkan elemen detail2
+                details2Element.innerText = "";
+                // Ambil state dan details dari kegiatan pertama
+                const state = activities[0].state;
+                const details = activities[0].details;
+                // Menyisipkan state ke dalam elemen HTML
+                details2Element.innerText = state;
+                // Menyisipkan details ke dalam elemen HTML
+                timestampElement.innerText = details;
+            } else {
+                // Jika tidak ada kegiatan, kosongkan semua elemen
+                activityElement.innerText = "";
+                detailsElement.innerText = "";
+                details2Element.innerText = "";
+                timestampElement.innerText = "";
+                largeImageElement.innerHTML = "";
+            }
+        }
+    })
+    .catch(error => console.error('Error fetching data:', error));
 }
-})
-
-// Mengambil data dari API
-fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-.then(response => response.json())
-.then(data => {
-// Memeriksa apakah pengguna sedang mendengarkan Spotify
-if (data.data.listening_to_spotify) {
-// Jika sedang mendengarkan, ambil URL gambar album Spotify
-const albumArtUrl = data.data.spotify.album_art_url;
-// Membuat elemen gambar baru
-const imgElement = document.createElement("img");
-// Mengatur atribut src elemen gambar ke URL gambar album Spotify
-imgElement.setAttribute("src", albumArtUrl);
-// Menambahkan properti CSS untuk mengatur ukuran gambar
-imgElement.style.width = "80px"; // Ganti dengan lebar yang diinginkan
-imgElement.style.height = "80px"; // Ganti dengan tinggi yang diinginkan
-// Menambahkan elemen gambar ke dalam elemen HTML large_image
-largeImageElement.appendChild(imgElement);
-}
-})
-.catch(error => console.error('Error fetching data:', error));
-
-fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-.then(response => response.json())
-.then(data => {
-// Memeriksa apakah pengguna sedang mendengarkan Spotify
-if (data.data.listening_to_spotify) {
-// Jika sedang mendengarkan, ambil nama album Spotify
-const albumName = data.data.spotify.album;
-// Menggabungkan "Listening To " dengan nama album
-const detailsText = "Listening To " + albumName;
-// Menyisipkan kegiatan ke dalam elemen HTML
-detailsElement.innerText = detailsText;
-} else {
-// Jika tidak sedang mendengarkan Spotify, kosongkan elemen HTML
-detailsElement.innerText = "";
-}
-})
 
 
-.catch(error => console.error('Error fetching data:', error));
-// Mengambil data dari API
-fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-.then(response => response.json())
-.then(data => {
-// Mengambil status dari data
-const status = data.data.discord_status;
-// Menyisipkan status ke dalam elemen HTML
-statusElement.innerText = status;
-})
-.catch(error => console.error('Error fetching data:', error));
 
-// Mengambil data dari API
-fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-.then(response => response.json())
-.then(data => {
-// Mengambil username dari data
-const username = data.data.discord_user.username;
-// Menyisipkan username ke dalam elemen HTML
-nameElement.innerText = username;
-})
-.catch(error => console.error('Error fetching data:', error));
 
+
+// Memanggil fungsi updateData secara berkala setiap 5 detik
+// Memanggil fungsi updateData untuk pertama kali saat halaman dimuat
+updateData();
+
+// Memanggil fungsi updateData secara berkala setiap 5 detik
+setInterval(updateData, 5000);
 
 (window.setScroll = () => document.body.style.setProperty('--scroll', scrollY / innerHeight))();
 ['scroll', 'resize'].forEach(e => addEventListener(e, setScroll));
