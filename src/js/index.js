@@ -22,7 +22,7 @@ function createProjectElement(project) {
     projectNameElement.textContent = project.name;
 
     const projectDescElement = document.createElement("p");
-    projectDescElement.textContent = project.description || "(Tidak Ada Deskripsi)";
+    projectDescElement.textContent = project.description || "(No description provided)";
 
     const metaElement = document.createElement("div");
     metaElement.classList.add("meta");
@@ -35,7 +35,7 @@ function createProjectElement(project) {
 
     const colorElement = document.createElement("div");
     colorElement.classList.add("color");
-    colorElement.style.backgroundColor = "#e42"; 
+    colorElement.style.backgroundColor = "#e42"; // Ganti dengan warna yang sesuai
 
     const langTextElement = document.createTextNode(project.language || "(Unknown)");
     langElement.appendChild(colorElement);
@@ -48,10 +48,33 @@ function createProjectElement(project) {
     linkElement.appendChild(projectDescElement);
     linkElement.appendChild(metaElement);
 
+    if (project.name === "TebakGambar") {
+        linkElement.addEventListener("click", function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Pilihan',
+                text: 'Ingin menuju repository atau Game TebakGambar?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Repository',
+                cancelButtonText: 'Halaman Web'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = project.html_url;
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = 'https://itzapipajalah.github.io/TebakGambar/';
+                }
+            });
+        });
+    }
+
+    
+
     projectElement.appendChild(linkElement);
 
     return projectElement;
 }
+
 
 async function renderProjects() {
     const projectsContainer = document.getElementById("projects-container");

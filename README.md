@@ -11,11 +11,11 @@ nama saya Afif Medya Wishnu, Saya seorang pelajar berumur 17 tahun yang tengah m
 
 Di bawah ini adalah beberapa proyek yang telah saya kerjakan:
 
-1. **NoteApp** - Aplikasi mobile android yang di kembangkan menggunakan flutter.
+1. [**NoteApp**](https://github.com/ItzApipAjalah/noteapp) - Aplikasi mobile android yang di kembangkan menggunakan flutter.
    
    <img src="https://github.com/ItzApipAjalah/portofolio/blob/main/ss1.jpg" alt="NotesApp" width="320" height="720">
 
-2. **Tebak Gambar** - Game Tebak Gambar yang di buat menggunakan javascript , serta progress di simpain melalui localstorage(browser)
+2. [**Tebak Gambar**](https://itzapipajalah.github.io/TebakGambar/)- Game Tebak Gambar yang di buat menggunakan javascript , serta progress di simpain melalui localstorage(browser)
    
    ![Tebak Gambar](https://github.com/ItzApipAjalah/portofolio/blob/main/ss2.jpg)
 
