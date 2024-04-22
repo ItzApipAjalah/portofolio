@@ -75,6 +75,7 @@ function updateData() {
     .then(data => {
         const nameElement = document.getElementById("name");
         const statusElement = document.getElementById("status");
+        const dotElement = document.getElementById("dot");
         const activityElement = document.getElementById("activity");
         const detailsElement = document.getElementById("details");
         const details2Element = document.getElementById("details2");
@@ -87,6 +88,24 @@ function updateData() {
 
         nameElement.innerText = username;
         statusElement.innerText = status;
+        
+        // Update background-color berdasarkan discord_status
+        switch (status) {
+            case 'online':
+                dotElement.style.backgroundColor = '#4b8';
+                break;
+            case 'idle':
+                dotElement.style.backgroundColor = '#fa1';
+                break;
+            case 'dnd':
+                dotElement.style.backgroundColor = '#f44';
+                break;
+            case 'offline':
+                dotElement.style.backgroundColor = '#778';
+                break;
+            default:
+                dotElement.style.backgroundColor = '#000'; // Jika status tidak valid, gunakan warna default
+        }
 
         if (listeningToSpotify) {
             const albumName = data.data.spotify.album;
@@ -152,6 +171,7 @@ function updateData() {
     })
     .catch(error => console.error('Error fetching data:', error));
 }
+
 updateData();
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
