@@ -98,7 +98,6 @@ function updateData() {
             const albumArtUrl = data.data.spotify.album_art_url;
 
             // Menyisipkan kegiatan ke dalam elemen HTML
-            activityElement.innerText = "Listening To " + albumName;
             // Menyisipkan detail ke dalam elemen HTML
             detailsElement.innerText = "Listening To " + albumName;
             // Menyisipkan detail2 ke dalam elemen HTML
@@ -129,7 +128,7 @@ function updateData() {
                     case "Visual Studio Code":
                         imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
                         break;
-                    case "VALORANT":
+                    case "Valorant":
                         imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
                         break;
                     case "Roblox":
@@ -172,6 +171,19 @@ function updateData() {
     .catch(error => console.error('Error fetching data:', error));
 }
 
+const accessToken = "f2112df76d10484598e2e98dca546ce9"; // Token akses yang telah Anda dapatkan dari pengguna
+
+fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+  headers: {
+    'Authorization': `Bearer ${accessToken}`
+  }
+})
+.then(response => response.json())
+.then(data => {
+  // Di sini Anda dapat memproses data lagu yang sedang diputar
+  console.log(data);
+})
+.catch(error => console.error('Error fetching currently playing song:', error));
 
 
 
@@ -181,7 +193,7 @@ function updateData() {
 updateData();
 
 // Memanggil fungsi updateData secara berkala setiap 5 detik
-setInterval(updateData, 10000);
+setInterval(updateData, 5000);
 
 (window.setScroll = () => document.body.style.setProperty('--scroll', scrollY / innerHeight))();
 ['scroll', 'resize'].forEach(e => addEventListener(e, setScroll));
