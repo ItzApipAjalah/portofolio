@@ -188,7 +188,7 @@ fetch('https://api.spotify.com/v1/me/player/currently-playing', {
 fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
-        'Authorization': 'Basic *credentials*',
+        'Authorization': 'Basic ${accessToken}',
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: 'grant_type=client_credentials'
