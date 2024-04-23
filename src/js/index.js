@@ -311,9 +311,18 @@ var firstTrack = "src/sound/odoriko.mp3";
   });
 
   document.addEventListener("DOMContentLoaded", function() {
+    toastr.options.progressBar = true;
     toastr.info('Tekan 2 Mengganti gambar neko <3', '', {
+      
         timeOut: 20000 // Set timeout to 20 seconds (20000 milliseconds)
     });
+});
+//Reset scroll top
+
+history.scrollRestoration = "manual";
+
+$(window).on('beforeunload', function(){
+      $(window).scrollTop(0);
 });
   // Function to play audio
   function handleAutoplayError(error) {
