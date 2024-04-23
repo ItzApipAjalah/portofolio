@@ -335,6 +335,18 @@ var firstTrack = "src/sound/odoriko.mp3";
         showCloseButton: true // Menampilkan tombol close
     });
 });
+
+document.getElementById('cv').addEventListener('click', function () {
+  // Tampilkan SweetAlert dengan gambar di dalamnya
+  Swal.fire({
+      imageUrl: '../../src/image/CV/CV.jpg', // Ganti dengan path ke gambar yang ingin ditampilkan
+      imageAlt: 'Gambar',
+      showCloseButton: true, // Menampilkan tombol close
+      footer: '<a href="../../src/image/CV/CV.pdf" download>Download CV</a>' // Tombol unduh CV
+  });
+});
+
+
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();
