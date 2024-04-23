@@ -355,7 +355,7 @@ document.addEventListener('keydown', function(event) {
   if (event.key === '3') {
     // Menampilkan SweetAlert dengan pilihan latar belakang
     Swal.fire({
-      title: 'Pilih latar belakang',
+      title: 'Pilih latar belakang(bug)',
       input: 'select',
       inputOptions: {
         'bg2.webp': 'Background 2',
