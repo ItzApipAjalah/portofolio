@@ -37,7 +37,7 @@
                     <div>
                         <h5 id="username-display" class="m-0">Username</h5>
                         <small id="status"></small>
-
+                        
                     </div>
                 </div>
                 
@@ -52,12 +52,15 @@
                     <div class="flex mt-4">
                         <button onclick="enterUsername()" id="start-button" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-300 ease-in-out">Enter Username</button>
                     </div>
+                    
                     <!-- Message Input Section (Hidden by default) -->
                     <div class="flex mt-4" id="message-section" style="display: none;">
                         <input id="username" type="text" placeholder="Your Name" class="flex-1 px-4 py-2 rounded-l-lg focus:outline-none focus:ring focus:border-blue-300 mr-2 shadow-md text-dark transition-colors duration-300" readonly>
-                        <input id="message" type="text" placeholder="Type your message..." class="flex-1 px-4 py-2 rounded-r-lg focus:outline-none focus:ring focus:border-blue-300 ml-2 shadow-md text-dark transition-colors duration-300 chat-input">
+                        <input id="message" type="text" placeholder="Type your message/img url..." class="flex-1 px-4 py-2 rounded-r-lg focus:outline-none focus:ring focus:border-blue-300 ml-2 shadow-md text-dark transition-colors duration-300 chat-input">
+                        
                         <button onclick="sendMessage()" class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md ml-2 hover:bg-blue-600 transition duration-300 ease-in-out">Send</button>
                     </div>
+                    
                     <!-- Chat Container -->
                     
                     <!-- End of Chat Container -->
