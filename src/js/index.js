@@ -74,7 +74,30 @@ function createProjectElement(project) {
 
     return projectElement;
 }
+async function fetchLastCommitTitle() {
+  try {
+      const response = await fetch('https://api.github.com/repos/ItzApipAjalah/portofolio/commits');
+      const data = await response.json();
+      return data[0].commit.message;
+  } catch (error) {
+      console.error('Error fetching last commit title:', error);
+      return null;
+  }
+}
 
+async function updateLastDeploymentInfo() {
+  const deployLink = document.getElementById('deploy-link');
+  const deployInfo = document.getElementById('deploy-info');
+
+  const lastCommitTitle = await fetchLastCommitTitle();
+  if (lastCommitTitle) {
+      deployInfo.textContent = `Last change: ${lastCommitTitle}`;
+  } else {
+      deployInfo.textContent = 'No recent changes found';
+  }
+}
+
+updateLastDeploymentInfo();
 
 async function renderProjects() {
     const projectsContainer = document.getElementById("projects-container");
