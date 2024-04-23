@@ -95,7 +95,7 @@ header section {
 header p {
     -webkit-mask: linear-gradient(to right, #fff 45%, transparent 55%) 0 0/220% 100% no-repeat;
     opacity: clamp(.7, .75 * var(--scroll, 0) + .7, .85);
-    animation: 2s ease-in-out 2.8s both bio;
+    animation: 2s ease-in-out 0.8s both bio;
     color: #fff;
     font-weight: normal;
     font-size: clamp(18px, 3vmin, 25px);
@@ -701,7 +701,7 @@ header button {
     cursor: pointer; /* Cursor style */
     border-radius: 8px; /* Rounded corners */
     transition: background-color 0.3s; /* Smooth transition */
-    animation: 2s ease-in-out 2.8s both bio; /* Animation similar to <p> */
+    animation: 2s ease-in-out 0.8s both bio; /* Animation similar to <p> */
     opacity: clamp(.85, .85 * var(--scroll, 0) + .85, .85); /* Opacity similar to <p> */
     -webkit-mask: linear-gradient(to right, #fff 45%, transparent 55%) 0 0/220% 100% no-repeat;
 }
