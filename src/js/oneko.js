@@ -96,7 +96,7 @@
     nekoEl.style.top = `${nekoPosY - 16}px`;
     nekoEl.style.zIndex = Number.MAX_VALUE;
 
-    let nekoFile = "../../src/image/onekoslvt.png"
+    let nekoFile = "../../src/image/oneko/onekoslvt.png"
     const curScript = document.currentScript
     if (curScript && curScript.dataset.cat) {
       nekoFile = curScript.dataset.cat
@@ -111,9 +111,54 @@
     });
 
     window.requestAnimationFrame(onAnimationFrame);
+    document.addEventListener("DOMContentLoaded", function() {
+      document.addEventListener("keydown", function(event) {
+          if (event.key === "2") {
+              const images = [
+                "../../src/image/oneko/oneko.gif",
+                  "../../src/image/oneko/onekoslvt.png",
+                  "../../src/image/oneko/pride.png",
+                  "../../src/image/oneko/BRIGHT.png",
+                  "../../src/image/oneko/DARK.png",
+                  "../../src/image/oneko/oneko_black.png",
+                  "../../src/image/oneko/oneko_gray.png",
+                  "../../src/image/oneko/oneko_hollow.png",
+                  "../../src/image/oneko/oneko_white.png",
+                  // Tambahkan gambar-gambar lainnya di sini
+              ];
+
+                    // Ambil nama file dari path gambar
+                    const imageNames = images.map(imagePath => {
+                      return imagePath.split('/').pop(); // Mengambil bagian terakhir dari path
+                  });
+
+                  // Tampilkan dialog SweetAlert dengan pilihan gambar
+                  Swal.fire({
+                      title: "Pilih Gambar Neko",
+                      showCancelButton: true,
+                      cancelButtonText: "Batal",
+                      input: "select",
+                      inputOptions: imageNames.reduce((acc, name, index) => {
+                          acc[index] = name;
+                          return acc;
+                      }, {}),
+                  }).then((result) => {
+                      if (!result.dismiss) {
+                          const selectedImage = images[result.value];
+                          if (selectedImage) {
+                              nekoEl.style.backgroundImage = `url(${selectedImage})`;
+                          }
+                      }
+                  });
+              }
+          });
+      });
+
   }
 
   let lastFrameTimestamp;
+
+  
 
   function onAnimationFrame(timestamp) {
     // Stops execution if the neko element is removed from DOM
