@@ -293,8 +293,8 @@ var firstTrack = "src/sound/odoriko.mp3";
           console.error("Manual play failed: " + error);
         });
       },
-      timeOut: 0, // Set timeout to 0 to prevent auto hide
-      extendedTimeOut: 0 // Set extended timeout to 0 to prevent auto hide
+      timeOut: 20000, // Set timeout to 0 to prevent auto hide
+      extendedTimeOut: 20000 // Set extended timeout to 0 to prevent auto hide
     });
   }
 
