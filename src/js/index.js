@@ -93,107 +93,105 @@ async function renderProjects() {
 
 renderProjects();
 function updateData() {
-    fetch('https://api.lanyard.rest/v1/users/481734993622728715')
-    .then(response => response.json())
-    .then(data => {
-        const nameElement = document.getElementById("name");
-        const statusElement = document.getElementById("status");
-        const dotElement = document.getElementById("dot");
-        const activityElement = document.getElementById("activity");
-        const detailsElement = document.getElementById("details");
-        const details2Element = document.getElementById("details2");
-        const timestampElement = document.getElementById("timestamp");
-        const largeImageElement = document.getElementById("large_image");
+  fetch('https://api.lanyard.rest/v1/users/481734993622728715')
+  .then(response => response.json())
+  .then(data => {
+      const nameElement = document.getElementById("name");
+      const statusElement = document.getElementById("status");
+      const dotElement = document.getElementById("dot");
+      const activityElement = document.getElementById("activity");
+      const detailsElement = document.getElementById("details");
+      const details2Element = document.getElementById("details2");
+      const timestampElement = document.getElementById("timestamp");
+      const largeImageElement = document.getElementById("large_image");
 
-        const username = data.data.discord_user.username;
-        const status = data.data.discord_status;
-        const listeningToSpotify = data.data.listening_to_spotify;
+      const username = data.data.discord_user.username;
+      const status = data.data.discord_status;
+      const listeningToSpotify = data.data.listening_to_spotify;
 
-        nameElement.innerText = username;
-        statusElement.innerText = status;
-        
-        // Update background-color berdasarkan discord_status
-        switch (status) {
-            case 'online':
-                dotElement.style.backgroundColor = '#4b8';
-                break;
-            case 'idle':
-                dotElement.style.backgroundColor = '#fa1';
-                break;
-            case 'dnd':
-                dotElement.style.backgroundColor = '#f44';
-                break;
-            case 'offline':
-                dotElement.style.backgroundColor = '#778';
-                break;
-            default:
-                dotElement.style.backgroundColor = '#000'; // Jika status tidak valid, gunakan warna default
-        }
+      nameElement.innerText = username;
+      statusElement.innerText = status;
+      
+      // Update background-color berdasarkan discord_status
+      switch (status) {
+          case 'online':
+              dotElement.style.backgroundColor = '#4b8';
+              break;
+          case 'idle':
+              dotElement.style.backgroundColor = '#fa1';
+              break;
+          case 'dnd':
+              dotElement.style.backgroundColor = '#f44';
+              break;
+          case 'offline':
+              dotElement.style.backgroundColor = '#778';
+              break;
+          default:
+              dotElement.style.backgroundColor = '#000'; // Jika status tidak valid, gunakan warna default
+      }
 
-        if (listeningToSpotify) {
-            const albumName = data.data.spotify.album;
-            const albumArtUrl = data.data.spotify.album_art_url;
-            const artistName = data.data.spotify.artist;
+      if (listeningToSpotify) {
+          const albumName = data.data.spotify.album;
+          const albumArtUrl = data.data.spotify.album_art_url;
+          const artistName = data.data.spotify.artist;
 
-            detailsElement.innerText = "Listening To " + albumName;
-            details2Element.innerText = "By " + artistName;
+          detailsElement.innerText = "Listening To " + albumName;
+          details2Element.innerText = "By " + artistName;
 
-            const imgElement = document.createElement("img");
-            imgElement.setAttribute("src", albumArtUrl);
-            imgElement.style.width = "80px"; 
-            imgElement.style.height = "80px"; 
-            largeImageElement.innerHTML = ""; // Clear sebelum menambahkan gambar baru
-            largeImageElement.appendChild(imgElement);
-        } else {
-            const activities = data.data.activities;
-            if (activities.length > 0) {
-                const detailsName = activities[0].name;
-                detailsElement.innerText = "Playing " + detailsName;
-                
-                let imageUrl = "";
-                switch (detailsName) {
-                    case "Visual Studio Code":
-                        imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
-                        break;
-                    case "VALORANT":
-                        imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
-                        break;
-                    case "Roblox":
-                        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
-                        break;
-                    default:
-                        imageUrl = "https://w0.peakpx.com/wallpaper/778/9/HD-wallpaper-404-error-404-error-glitch-glitch.jpg";
-                        break;
-                }
+          const imgElement = document.createElement("img");
+          imgElement.setAttribute("src", albumArtUrl);
+          imgElement.style.width = "80px"; 
+          imgElement.style.height = "80px"; 
+          largeImageElement.innerHTML = ""; // Clear sebelum menambahkan gambar baru
+          largeImageElement.appendChild(imgElement);
+      } else {
+          const activities = data.data.activities;
+          if (activities.length > 0) {
+              const detailsName = activities[0].name;
+              detailsElement.innerText = "Playing " + detailsName;
+              
+              let imageUrl = "";
+              switch (detailsName) {
+                  case "Visual Studio Code":
+                      imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
+                      break;
+                  case "VALORANT":
+                      imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
+                      break;
+                  case "Roblox":
+                      imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
+                      break;
+                  default:
+                      imageUrl = "https://w0.peakpx.com/wallpaper/778/9/HD-wallpaper-404-error-404-error-glitch-glitch.jpg";
+                      break;
+              }
 
-                if (imageUrl !== "") {
-                    const imgElement = document.createElement("img");
-                    imgElement.setAttribute("src", imageUrl);
-                    imgElement.style.width = "80px";
-                    imgElement.style.height = "80px";
-                    largeImageElement.innerHTML = "";
-                    largeImageElement.appendChild(imgElement);
-                }
-                
-                details2Element.innerText = "";
-                // Ambil state dan details dari kegiatan pertama
-                const state = activities[0].state;
-                const details = activities[0].details;
-                // Menyisipkan state ke dalam elemen HTML
-                details2Element.innerText = state;
-                // Menyisipkan details ke dalam elemen HTML
-                timestampElement.innerText = details;
-            } else {
-                activityElement.innerText = "";
-                detailsElement.innerText = "";
-                details2Element.innerText = "";
-                timestampElement.innerText = "";
-                largeImageElement.innerHTML = "";
-            }
-        }
-    })
-    .catch(error => console.error('Error fetching data:', error));
+              if (imageUrl !== "") {
+                  const imgElement = document.createElement("img");
+                  imgElement.setAttribute("src", imageUrl);
+                  imgElement.style.width = "80px";
+                  imgElement.style.height = "80px";
+                  largeImageElement.innerHTML = "";
+                  largeImageElement.appendChild(imgElement);
+              }
+              
+              // Menyisipkan state ke dalam elemen HTML
+              const state = activities[0].state;
+              details2Element.innerText = state || ""; // Menyisipkan details ke dalam elemen HTML, kosongkan jika undefined
+              // Menyisipkan details ke dalam elemen HTML
+              timestampElement.innerText = activities[0].details || ""; // Menyisipkan details ke dalam elemen HTML, kosongkan jika undefined
+          } else {
+              activityElement.innerText = "";
+              detailsElement.innerText = "";
+              details2Element.innerText = "";
+              timestampElement.innerText = "";
+              largeImageElement.innerHTML = "";
+          }
+      }
+  })
+  .catch(error => console.error('Error fetching data:', error));
 }
+
 
 updateData();
 
@@ -363,7 +361,7 @@ document.addEventListener('keydown', function(event) {
       confirmButtonText: 'Simpan',
       cancelButtonText: 'Batal',
       inputValidator: (value) => {
-        if (!value) {
+        if (!value) { 
           return 'Anda harus memilih salah satu opsi'
         }
       }
