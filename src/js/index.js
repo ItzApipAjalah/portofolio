@@ -327,6 +327,14 @@ var firstTrack = "src/sound/odoriko.mp3";
   // Call playAudio function when the page loads
   window.addEventListener("load", playAudio);
 
+  document.getElementById('showImage').addEventListener('click', function () {
+    // Tampilkan SweetAlert dengan gambar di dalamnya
+    Swal.fire({
+        imageUrl: 'https://w0.peakpx.com/wallpaper/778/9/HD-wallpaper-404-error-404-error-glitch-glitch.jpg', // Ganti dengan path ke gambar yang ingin ditampilkan
+        imageAlt: 'Gambar',
+        showCloseButton: true // Menampilkan tombol close
+    });
+});
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();
