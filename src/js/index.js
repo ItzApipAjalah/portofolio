@@ -346,6 +346,37 @@ document.getElementById('cv').addEventListener('click', function () {
   });
 });
 
+// Menambahkan event listener ke seluruh dokumen
+document.addEventListener('keydown', function(event) {
+  // Memeriksa apakah tombol yang ditekan adalah "3"
+  if (event.key === '3') {
+    // Menampilkan SweetAlert dengan pilihan latar belakang
+    Swal.fire({
+      title: 'Pilih latar belakang',
+      input: 'select',
+      inputOptions: {
+        'bg2.webp': 'Background 2',
+        'bg.webp': 'Background 1'
+      },
+      inputPlaceholder: 'Pilih latar belakang',
+      showCancelButton: true,
+      confirmButtonText: 'Simpan',
+      cancelButtonText: 'Batal',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Anda harus memilih salah satu opsi'
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const selectedBackground = result.value;
+        // Ubah latar belakang sesuai dengan pilihan pengguna
+        document.getElementById('bg').style.backgroundImage = `url('../../src/image/${selectedBackground}')`;
+        Swal.fire('Sukses!', 'Latar belakang telah diubah', 'success');
+      }
+    });
+  }
+});
 
   // $(document).ready(function() {
   //   var movementStrength = 25;
