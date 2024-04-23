@@ -18,7 +18,7 @@
 }
 
 .blur {
-    filter: blur(8px); /* Menggunakan efek blur */
+    filter: blur(3px); /* Menggunakan efek blur */
 }
 
 
