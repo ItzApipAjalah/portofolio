@@ -359,4 +359,3 @@ document.getElementById('cv').addEventListener('click', function () {
   //             $('#bg').css("background-position", newvalueX+"px     "+newvalueY+"px");
   //   });
   //   });
-    
