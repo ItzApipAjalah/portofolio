@@ -148,7 +148,11 @@ function updateData() {
           const activities = data.data.activities;
           if (activities.length > 0) {
               const detailsName = activities[0].name;
-              detailsElement.innerText = "Playing " + detailsName;
+              if (detailsName === "Feather") {
+                  detailsElement.innerText = "Playing Feather (Minecraft)";
+              } else {
+                  detailsElement.innerText = "Playing " + detailsName;
+              }
               
               let imageUrl = "";
               switch (detailsName) {
@@ -191,6 +195,7 @@ function updateData() {
   })
   .catch(error => console.error('Error fetching data:', error));
 }
+
 
 
 updateData();
