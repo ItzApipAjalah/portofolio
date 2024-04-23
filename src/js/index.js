@@ -381,6 +381,13 @@ document.addEventListener('keydown', function(event) {
   }
 });
 
+document.body.style.overflow = 'hidden';
+
+        // Re-enable scrolling after 1 second
+        setTimeout(function() {
+            document.body.style.overflow = 'auto';
+        }, 1400); // 1000 milliseconds = 1 second
+
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();
