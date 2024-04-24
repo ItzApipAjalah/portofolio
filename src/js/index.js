@@ -452,9 +452,9 @@ async function displayAnimeRecommendations() {
           <a href="${entry.url}" aria-label="${title}">
               <div class="content">
                   <div class="image" style="background-image: url('${imageUrl} ' )"></div>
-                  <div class="meta" style="text-align: center;">
-                      <b>Recommendation Anime</b>
-                      <p>${title}</p>
+                  <div class="meta" style="white-space: nowrap; text-align: center;">
+                      <b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Recommendation Anime &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </b>
+                      <p id="animeTitle">${title}</p>
                   </div>
               </div>
           </a>

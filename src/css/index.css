@@ -237,14 +237,17 @@ main {
 
 .widget a[aria-label] {
     box-sizing: border-box;
+    text-align: center;
     padding: 0;
 }
 
 .widget a[aria-label] .image {
     background: var(--bg) center/contain no-repeat;
-    width: 300%;
-    height: 100%;
+    width: 100%; /* Mengatur lebar agar tidak melebihi parent */
+    height: 100%; /* Mengatur tinggi agar tidak melebihi parent */
+    background-size: cover; /* Memastikan gambar terisi dan memperbesar sesuai ukuran elemen */
 }
+
 
 
 
@@ -544,8 +547,10 @@ aside {
     height: .6em;
 }
 
+/* Footer style */
 footer {
     display: flex;
+    flex-direction: column; /* Change to column layout */
     justify-content: center;
     align-items: center;
     margin-top: -35vh;
@@ -553,12 +558,46 @@ footer {
     font-size: 20px;
 }
 
+/* Search bar style */
+footer form {
+    margin-bottom: 20px;
+}
+
+footer input[type="text"] {
+    padding: 10px; /* Padding */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    background-color: #defa; /* Blue background color, sama dengan background footer */
+}
+
+footer button[type="submit"] {
+    background-color: #4CAF50; /* Green background color */
+    border: none; /* No border */
+    color: white; /* White text color */
+    padding: 10px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No text decoration */
+    display: inline-block; /* Display as inline block */
+    width: 200px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    font-size: 16px; /* Font size */
+    margin-top: 20px; /* Margin top */
+    cursor: pointer; /* Cursor style */
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+    animation: 2s ease-in-out 0.8s both bio; /* Animation similar to <p> */
+    opacity: clamp(.85, .85 * var(--scroll, 0) + .85, .85); /* Opacity similar to <p> */
+}
+
+
 footer p {
     opacity: .65;
     transition: opacity .2s;
     color: #fff;
     line-height: 2;
     text-align: center;
+    margin-top: 20px;
 }
 
 footer div:hover {
@@ -573,6 +612,7 @@ footer a {
 footer a:hover {
     color: #7df;
 }
+
 
 #os {
     position: fixed;
