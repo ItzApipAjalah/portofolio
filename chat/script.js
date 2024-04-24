@@ -53,7 +53,7 @@ async function loadChat() {
             // If the message contains an image URL, create an image element
             const img = document.createElement('img');
             img.src = imageUrlMatch[0];
-            img.style.maxWidth = '100%';
+            img.style.maxWidth = '25%';
             div.appendChild(img);
         } else {
             // If the message is plain text, display the message content
@@ -93,20 +93,19 @@ async function sendMessage() {
     const imageUrlRegex = /(https?:\/\/.*\.(?:jpg|png|jpeg|jpe|jfif|gif))/i;
     const imageUrlMatch = message.match(imageUrlRegex);
 
-    // If the message contains an image URL, save the URL to the database
-    if (imageUrlMatch) {
-        const { error } = await _supabase.from('chat').insert([{ username, message: imageUrlMatch[0] }]);
-        if (error) {
-            console.error(error);
-            return;
-        }
-    } else {
-        // If the message does not contain an image URL, save the message to the database
-        const { error } = await _supabase.from('chat').insert([{ username, message }]);
-        if (error) {
-            console.error(error);
-            return;
-        }
+    // Sensor inappropriate words in the message
+    const censoredMessage = sensorMessage(message);
+
+    // Check if the message contains inappropriate words
+    if (censoredMessage !== message) {
+        toastr.warning('Please refrain from using inappropriate language.');
+    }
+
+    // Save the original message to the database
+    const { error } = await _supabase.from('chat').insert([{ username, message: censoredMessage }]);
+    if (error) {
+        console.error(error);
+        return;
     }
 
     // Clear the message input field
@@ -131,6 +130,8 @@ async function sendMessage() {
         }
     }, 1000);
 }
+
+
 
 
 
@@ -202,7 +203,6 @@ function sensorMessage(message) {
     
     const regex = new RegExp(`\\b(${inappropriateWords.join('|')})\\b`, 'gi');
     return message.replace(regex, (match) => '*'.repeat(match.length));
-    
 }
 
 // Load inappropriate words list when the page is loaded
