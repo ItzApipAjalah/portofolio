@@ -418,70 +418,56 @@ document.body.style.overflow = 'hidden';
         setTimeout(function() {
             document.body.style.overflow = 'auto';
         }, 1400); // 1000 milliseconds = 1 second
-
-
-        // Fungsi untuk mendapatkan IP address pengunjung
-        function getIPAddress() {
-          // Gunakan API publik untuk mendapatkan IP address (contohnya: ipify.org)
-          fetch('https://api.ipify.org?format=json')
-              .then(response => response.json())
-              .then(data => {
-                  // Panggil fungsi untuk mengupdate jumlah pengunjung dengan IP address sebagai parameter
-                  updateVisitorCounter(data.ip);
-              })
-              .catch(error => console.error('Error fetching IP address:', error));
-      }
-
-      // Fungsi untuk mengupdate jumlah pengunjung
-      function updateVisitorCounter(ip) {
-          // Ambil elemen <p> dengan ID "visitor-counter"
-          var counterElement = document.getElementById('visitor-counter');
-          if (counterElement) {
-              // Dapatkan teks dari elemen tersebut
-              var counterText = counterElement.innerText;
-              // Pisahkan teks menjadi array berdasarkan spasi
-              var counterArray = counterText.split(' ');
-              // Ubah elemen terakhir array menjadi 1 (representasi jumlah pengunjung)
-              counterArray[counterArray.length - 1] = '1';
-              // Gabungkan kembali array menjadi teks dengan spasi sebagai pemisah
-              var newCounterText = counterArray.join(' ');
-              // Update teks di dalam elemen <p>
-              counterElement.innerText = newCounterText;
-
-              // Simpan jumlah pengunjung ke file di GitHub Pages dengan IP address sebagai komentar
-              saveVisitorCount(ip);
+        async function fetchAnimeRecommendations() {
+          try {
+              const response = await fetch('https://api.jikan.moe/v4/recommendations/anime');
+              const data = await response.json();
+              return data;
+          } catch (error) {
+              console.error('Error fetching anime recommendations:', error);
+              return null;
           }
       }
 
-      // Fungsi untuk menyimpan jumlah pengunjung ke file di GitHub Pages
-      function saveVisitorCount(ip) {
-          // URL file di GitHub Pages
-          var githubPagesUrl = 'https://raw.githubusercontent.com/ItzApipAjalah/portofolio/main/counter.txt';
-          
-          // Ambil jumlah pengunjung dari elemen <p>
-          var visitorCount = document.getElementById('visitor-counter').innerText;
-          // Buat payload untuk dikirim
-          var payload = visitorCount + '  (' + ip + ')'; // Tambahkan IP address sebagai komentar
+      // Function to display anime recommendations in widgets
+      // Function to display anime recommendations in widgets
+async function displayAnimeRecommendations() {
+  const animeListDiv = document.getElementById('animeList');
+  const animeData = await fetchAnimeRecommendations();
+  
+  if (animeData && animeData.data && animeData.data.length > 0) {
+      // Generate a random index within the range of available recommendations
+      const randomIndex = Math.floor(Math.random() * animeData.data.length);
+      
+      // Get a random recommendation
+      const recommendation = animeData.data[randomIndex];
+      const entry = recommendation.entry[0];
+      const title = entry.title;
+      const imageUrl = entry.images.jpg.image_url;
 
-          // Kirim permintaan PUT untuk menyimpan data ke file di GitHub Pages
-          fetch(githubPagesUrl, {
-              method: 'PUT',
-              body: payload
-          })
-          .then(response => {
-              if (response.ok) {
-                  console.log('Visitor count saved successfully!');
-              } else {
-                  console.error('Failed to save visitor count:', response.status);
-              }
-          })
-          .catch(error => console.error('Error saving visitor count:', error));
-      }
+      const widget = document.createElement('div');
+      widget.classList.add('widget');
+      
+      widget.innerHTML = `
+          <a href="${entry.url}" aria-label="${title}">
+              <div class="content">
+                  <div class="image" style="background-image: url('${imageUrl} ' )"></div>
+                  <div class="meta" style="text-align: center;">
+                      <b>Recommendation Anime</b>
+                      <p>${title}</p>
+                  </div>
+              </div>
+          </a>
+      `;
+      animeListDiv.appendChild(widget);
+  } else {
+      animeListDiv.innerHTML = '<p>No anime recommendations found.</p>';
+  }
+}
 
-      // Panggil fungsi untuk mendapatkan IP address dan mengupdate jumlah pengunjung saat halaman dimuat
-      window.addEventListener('load', function() {
-          getIPAddress();
-      });
+
+      // Display anime recommendations when the page loads
+      window.onload = displayAnimeRecommendations;
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();

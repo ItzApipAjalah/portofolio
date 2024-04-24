@@ -242,9 +242,12 @@ main {
 
 .widget a[aria-label] .image {
     background: var(--bg) center/contain no-repeat;
-    width: 100%;
+    width: 300%;
     height: 100%;
 }
+
+
+
 
 .widget .content {
     display: flex;
