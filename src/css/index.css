@@ -198,6 +198,7 @@ main {
     height: calc(var(--square-size) * var(--r) + var(--gap) * (var(--r) - 1));
     overflow: hidden;
     color: #000;
+    
 }
 
 @media (width < 1300px) {

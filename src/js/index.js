@@ -419,6 +419,46 @@ document.body.style.overflow = 'hidden';
             document.body.style.overflow = 'auto';
         }, 1400); // 1000 milliseconds = 1 second
 
+
+        // Fungsi untuk mendapatkan IP address pengunjung
+function getIPAddress() {
+  // Gunakan API publik untuk mendapatkan IP address (contohnya: ipify.org)
+  // Anda dapat menggunakan metode lain yang sesuai dengan preferensi Anda
+  fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+          // Panggil fungsi untuk mengupdate jumlah pengunjung dengan IP address sebagai parameter
+          updateVisitorCounter(data.ip);
+      })
+      .catch(error => console.error('Error fetching IP address:', error));
+}
+
+// Fungsi untuk mengupdate jumlah pengunjung
+function updateVisitorCounter(ip) {
+  // Ambil elemen <p> dengan ID "visitor-counter"
+  var counterElement = document.getElementById('visitor-counter');
+  if (counterElement) {
+      // Dapatkan teks dari elemen tersebut
+      var counterText = counterElement.innerText;
+      // Pisahkan teks menjadi array berdasarkan spasi
+      var counterArray = counterText.split(' ');
+      // Ubah elemen terakhir array menjadi 1 (representasi jumlah pengunjung)
+      counterArray[counterArray.length - 1] = '1';
+      // Gabungkan kembali array menjadi teks dengan spasi sebagai pemisah
+      var newCounterText = counterArray.join(' ');
+      // Update teks di dalam elemen <p>
+      counterElement.innerText = newCounterText;
+
+      // Di sini Anda dapat mengirimkan IP address ke server Anda dan memprosesnya sesuai kebutuhan
+      // Misalnya, untuk menyimpan IP address yang berbeda dalam database untuk menghitung jumlah pengunjung unik
+  }
+}
+
+// Panggil fungsi untuk mendapatkan IP address dan mengupdate jumlah pengunjung saat halaman dimuat
+window.addEventListener('load', function() {
+  getIPAddress();
+});
+
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();
