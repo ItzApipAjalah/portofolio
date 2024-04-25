@@ -465,6 +465,9 @@ async function displayAnimeRecommendations() {
   }
 }
 
+// Mendapatkan nilai waifuImages dari local storage saat halaman dimuat
+let waifuImages = JSON.parse(localStorage.getItem('waifuImages')) || [];
+
 const gachaWaifuWidget = document.getElementById('gachaWidget');
 
 gachaWaifuWidget.addEventListener('click', async function() {
@@ -474,7 +477,7 @@ gachaWaifuWidget.addEventListener('click', async function() {
         const currentTime = new Date().getTime();
         const elapsedTime = currentTime - parseInt(lastAccessTime);
         
-        if (elapsedTime < 20000) { 
+        if (elapsedTime < 20000) { // 20000 milidetik = 20 detik
             toastr.warning('Anda telah menggunakan gacha waifu dalam waktu 20 detik terakhir.');
             return;
         }
@@ -486,9 +489,12 @@ gachaWaifuWidget.addEventListener('click', async function() {
         
         const imageUrl = data.url;
 
+        // Menyimpan URL gambar ke dalam array waifuImages
+        waifuImages.push(imageUrl);
+        
         Swal.fire({
             imageUrl: '',
-            html: '<img id="waifuImage" src="' + imageUrl + '" alt="Waifu" style="filter: blur(20px); max-width: 100%; height: auto; transition: filter 0.3s;"><div id="clickText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px;">&#9888; Click gambar Untuk Melihat, Hati Hati Terkadang muncul NSFW &#9888;</div>',
+            html: '<img id="waifuImage" src="' + imageUrl + '" alt="Waifu" style="filter: blur(20px); max-width: 100%; height: auto; transition: filter 0.3s;"><div id="clickText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px;">Click gambar Untuk Melihat</div>',
             showCloseButton: true,
             showCancelButton: true,
             cancelButtonText: 'Close',
@@ -501,6 +507,23 @@ gachaWaifuWidget.addEventListener('click', async function() {
                     waifuImage.style.filter = 'none';
                     clickText.style.display = 'none';
                 });
+
+                // Membuat tombol "Waifu Kamu" di dalam SweetAlert
+                const waifuButton = document.createElement('button');
+                waifuButton.innerText = 'Waifu Kamu';
+                waifuButton.classList.add('swal2-confirm', 'swal2-styled');
+                waifuButton.addEventListener('click', function() {
+                    // Menampilkan SweetAlert dengan semua URL gambar waifu
+                    Swal.fire({
+                        title: 'Waifu Kamu',
+                        html: waifuImages.map(imageUrl => `<img src="${imageUrl}" style="max-width: 100%; height: auto;">`).join(''),
+                        showCloseButton: true
+                    });
+                });
+
+                // Menambahkan tombol "Waifu Kamu" ke dalam SweetAlert
+                const buttonsContainer = Swal.getActions();
+                buttonsContainer.appendChild(waifuButton);
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -516,11 +539,14 @@ gachaWaifuWidget.addEventListener('click', async function() {
 
         const currentTime = new Date().getTime();
         localStorage.setItem('waifuLastAccessTime', currentTime.toString());
+        localStorage.setItem('waifuImages', JSON.stringify(waifuImages)); // Simpan array waifuImages ke localStorage
     } catch (error) {
         console.error('Error fetching waifu image:', error);
         toastr.error('Terjadi kesalahan saat mengambil gambar waifu. Silakan coba lagi nanti.');
     }
 });
+
+
 
 
 
