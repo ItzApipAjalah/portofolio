@@ -214,6 +214,65 @@ document.getElementById('message').addEventListener('keypress', function(event) 
     }
 });
 
+// Function to check if it's a new day in WIB (Indonesia Barat) timezone
+function isNewDayInWIB() {
+    const currentTime = new Date();
+    // Adjust time to WIB timezone (UTC+7)
+    currentTime.setHours(currentTime.getHours() + 7);
+    // Get current day in WIB timezone
+    const currentDay = currentTime.getDate();
+    // Get last saved day from localStorage
+    const lastDay = localStorage.getItem('lastDay');
+    // If lastDay is null or different from current day, it's a new day
+    if (!lastDay || lastDay != currentDay) {
+        // Save current day to localStorage
+        localStorage.setItem('lastDay', currentDay);
+        return true;
+    }
+    return false;
+}
+
+// Function to send a message to Supabase
+async function sendDailyMessageToSupabase() {
+    const currentDay = new Date();
+    // Adjust time to WIB timezone (UTC+7)
+    currentDay.setHours(currentDay.getHours() + 7);
+    const formattedDate = currentDay.toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    const randomUUID = uuidv4(); // Generate random UUID
+
+    // Send the message to Supabase
+    const { error } = await _supabase.from('chat').insert([{ 
+        username: 'BOT', 
+        message: `Hari: ${formattedDate}`, 
+        created_at: new Date(), 
+        uuid: randomUUID 
+    }]);
+    if (error) {
+        console.error(error);
+        return;
+    }
+}
+
+// Function to generate UUID (Version 4)
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+// Check if it's a new day in WIB timezone and send message to Supabase
+if (isNewDayInWIB()) {
+    sendDailyMessageToSupabase();
+}
+
+
 window.onload = function() {
     
 };
