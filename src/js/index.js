@@ -554,6 +554,11 @@ gachaWaifuWidget.addEventListener('click', async function() {
 
       // Display anime recommendations when the page loads
       window.onload = displayAnimeRecommendations;
+
+      window.TrackJS && TrackJS.install({
+        token: "3ac9abaa54dd44a4b6123e54130f8c46",
+        console: { display: false }
+    });
   // $(document).ready(function() {
   //   var movementStrength = 25;
   //   var height = movementStrength / $(window).height();
