@@ -673,7 +673,7 @@ html {
 }
 
 @font-face {
-    src: url('font.woff2') format('woff2');
+    src: url('../../src/font/font.woff2') format('woff2');
     font-family: Inter;
     font-display: swap;
 }
