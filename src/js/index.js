@@ -154,11 +154,11 @@ function updateData() {
       }
 
       if (listeningToSpotify) {
-          const albumName = data.data.spotify.album;
+          const song_name = data.data.spotify.song;
           const albumArtUrl = data.data.spotify.album_art_url;
           const artistName = data.data.spotify.artist;
 
-          detailsElement.innerText = "Listening To " + albumName;
+          detailsElement.innerText = "Listening To " + song_name;
           details2Element.innerText = "By " + artistName;
 
           const imgElement = document.createElement("img");
@@ -571,3 +571,4 @@ gachaWaifuWidget.addEventListener('click', async function() {
   //             $('#bg').css("background-position", newvalueX+"px     "+newvalueY+"px");
   //   });
   //   });
+  // Tambahkan event listener untuk menangani peristiwa saat semua konten dimuat
