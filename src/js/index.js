@@ -188,8 +188,11 @@ function updateData() {
                   case "Roblox":
                       imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
                       break;
+                  case "Palworld":
+                      imageUrl = "https://pwmodding.wiki/ru/img/palworld.png";
+                      break;
                   default:
-                      imageUrl = "https://w0.peakpx.com/wallpaper/778/9/HD-wallpaper-404-error-404-error-glitch-glitch.jpg";
+                      imageUrl = "";
                       break;
               }
 
