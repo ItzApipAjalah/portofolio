@@ -128,7 +128,7 @@ function updateData() {
       const timestampElement = document.getElementById("timestamp");
       const largeImageElement = document.getElementById("large_image");
 
-      const username = data.data.discord_user.username;
+      const username = data.data.discord_user.display_name;
       const status = data.data.discord_status;
       const listeningToSpotify = data.data.listening_to_spotify;
 
@@ -171,38 +171,57 @@ function updateData() {
           const activities = data.data.activities;
           if (activities.length > 0) {
               const detailsName = activities[0].name;
-              if (detailsName === "Feather") {
+
+              // Check if the activity is YouTube Music
+              if (detailsName === "YouTube Music") {
+                  const songName = activities[0].details;
+                  const artistName = activities[0].state;
+                  const rawImageUrl = activities[0].assets.large_image;
+                  const imageUrl = "https://i.ytimg.com/" + rawImageUrl.split("i.ytimg.com/")[1];
+
+                  detailsElement.innerText = "Listening To " + songName;
+                  details2Element.innerText = "By " + artistName;
+
+                  const imgElement = document.createElement("img");
+                  imgElement.setAttribute("src", imageUrl);
+                  imgElement.style.width = "80px";
+                  imgElement.style.height = "80px";
+                  largeImageElement.innerHTML = ""; // Clear sebelum menambahkan gambar baru
+                  largeImageElement.appendChild(imgElement);
+              } else if (detailsName === "Feather") {
                   detailsElement.innerText = "Playing Feather (Minecraft)";
               } else {
                   detailsElement.innerText = "Playing " + detailsName;
               }
               
-              let imageUrl = "";
-              switch (detailsName) {
-                  case "Visual Studio Code":
-                      imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
-                      break;
-                  case "VALORANT":
-                      imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
-                      break;
-                  case "Roblox":
-                      imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
-                      break;
-                  case "Palworld":
-                      imageUrl = "https://pwmodding.wiki/ru/img/palworld.png";
-                      break;
-                  default:
-                      imageUrl = "";
-                      break;
-              }
+              if (detailsName !== "YouTube Music") {
+                  let imageUrl = "";
+                  switch (detailsName) {
+                      case "Visual Studio Code":
+                          imageUrl = "https://cdn.thenewstack.io/media/2021/10/4f0ac3e0-visual_studio_code.png";
+                          break;
+                      case "VALORANT":
+                          imageUrl = "https://seeklogo.com/images/V/valorant-logo-FAB2CA0E55-seeklogo.com.png";
+                          break;
+                      case "Roblox":
+                          imageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/48/Roblox_Logo_2021.png";
+                          break;
+                      case "Palworld":
+                          imageUrl = "https://pwmodding.wiki/ru/img/palworld.png";
+                          break;
+                      default:
+                          imageUrl = "";
+                          break;
+                  }
 
-              if (imageUrl !== "") {
-                  const imgElement = document.createElement("img");
-                  imgElement.setAttribute("src", imageUrl);
-                  imgElement.style.width = "80px";
-                  imgElement.style.height = "80px";
-                  largeImageElement.innerHTML = "";
-                  largeImageElement.appendChild(imgElement);
+                  if (imageUrl !== "") {
+                      const imgElement = document.createElement("img");
+                      imgElement.setAttribute("src", imageUrl);
+                      imgElement.style.width = "80px";
+                      imgElement.style.height = "80px";
+                      largeImageElement.innerHTML = "";
+                      largeImageElement.appendChild(imgElement);
+                  }
               }
               
               // Menyisipkan state ke dalam elemen HTML
@@ -221,6 +240,7 @@ function updateData() {
   })
   .catch(error => console.error('Error fetching data:', error));
 }
+
 
 
 
