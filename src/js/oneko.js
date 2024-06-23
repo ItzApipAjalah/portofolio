@@ -1,8 +1,5 @@
-// oneko.js: https://github.com/adryd325/oneko.js
-
 (function oneko() {
   const isReducedMotion =
-    window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
     window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 
   if (isReducedMotion) return;
@@ -96,10 +93,10 @@
     nekoEl.style.top = `${nekoPosY - 16}px`;
     nekoEl.style.zIndex = Number.MAX_VALUE;
 
-    let nekoFile = "../../src/image/oneko/oneko.gif"
-    const curScript = document.currentScript
+    let nekoFile = "../../src/image/oneko/oneko.gif";
+    const curScript = document.currentScript;
     if (curScript && curScript.dataset.cat) {
-      nekoFile = curScript.dataset.cat
+      nekoFile = curScript.dataset.cat;
     }
     nekoEl.style.backgroundImage = `url(${nekoFile})`;
 
@@ -111,57 +108,88 @@
     });
 
     window.requestAnimationFrame(onAnimationFrame);
-    document.addEventListener("DOMContentLoaded", function() {
-      document.addEventListener("keydown", function(event) {
-          if (event.key === "2") {
-              const images = [
-                "../../src/image/oneko/oneko.gif",
-                  "../../src/image/oneko/onekoslvt.png",
-                  "../../src/image/oneko/pride.png",
-                  "../../src/image/oneko/BRIGHT.png",
-                  "../../src/image/oneko/DARK.png",
-                  "../../src/image/oneko/oneko_black.png",
-                  "../../src/image/oneko/oneko_gray.png",
-                  "../../src/image/oneko/oneko_hollow.png",
-                  "../../src/image/oneko/oneko_white.png",
-                  // Tambahkan gambar-gambar lainnya di sini
-              ];
-
-                    // Ambil nama file dari path gambar
-                    const imageNames = images.map(imagePath => {
-                      return imagePath.split('/').pop(); // Mengambil bagian terakhir dari path
-                  });
-
-                  // Tampilkan dialog SweetAlert dengan pilihan gambar
-                  Swal.fire({
-                      title: "Pilih Gambar Neko",
-                      showCancelButton: true,
-                      cancelButtonText: "Batal",
-                      input: "select",
-                      inputOptions: imageNames.reduce((acc, name, index) => {
-                          acc[index] = name;
-                          return acc;
-                      }, {}),
-                  }).then((result) => {
-                      if (!result.dismiss) {
-                          const selectedImage = images[result.value];
-                          if (selectedImage) {
-                              nekoEl.style.backgroundImage = `url(${selectedImage})`;
-                          }
-                      }
-                  });
-              }
-          });
+    document.addEventListener("DOMContentLoaded", function () {
+      let isAndroid = /Android/i.test(navigator.userAgent);
+    
+      // Handler untuk desktop (keydown angka 2)
+      document.addEventListener("keydown", function (event) {
+        if (!isAndroid && event.key === "2") {
+          handleImageSelection();
+        }
       });
-
+    
+      // Handler untuk perangkat sentuh (tap dengan 2 jari)
+      let touchStartTimestamp = null;
+      document.addEventListener("touchstart", function (event) {
+        if (isAndroid) {
+          // Jika sentuhan dengan dua jari, cek interval antara kedua sentuhan
+          if (event.touches.length === 2) {
+            let now = Date.now();
+            if (touchStartTimestamp && (now - touchStartTimestamp < 300)) {
+              handleImageSelection();
+            }
+            touchStartTimestamp = now;
+          }
+        }
+      });
+    
+      function handleImageSelection() {
+        const images = [
+          "../../src/image/oneko/oneko.gif",
+          "../../src/image/oneko/onekoslvt.png",
+          "../../src/image/oneko/pride.png",
+          "../../src/image/oneko/BRIGHT.png",
+          "../../src/image/oneko/DARK.png",
+          "../../src/image/oneko/oneko_black.png",
+          "../../src/image/oneko/oneko_gray.png",
+          "../../src/image/oneko/oneko_hollow.png",
+          "../../src/image/oneko/oneko_white.png",
+          // Add more images here
+        ];
+    
+        const imageOptions = images.map((imagePath, index) => {
+          const imageName = imagePath.split("/").pop();
+          return `
+            <label class="neko-option">
+              <input type="radio" name="nekoImage" value="${index}">
+              <div class="neko-preview" style="background-image: url(${imagePath});"></div>
+              <span>${imageName}</span>
+            </label>
+          `;
+        }).join('');
+    
+        Swal.fire({
+          title: "Pilih Gambar Neko",
+          showCancelButton: true,
+          cancelButtonText: "Batal",
+          html: `
+            <div class="neko-options">
+              ${imageOptions}
+            </div>
+          `,
+          preConfirm: () => {
+            const selectedImageIndex = document.querySelector('input[name="nekoImage"]:checked');
+            if (selectedImageIndex) {
+              return images[selectedImageIndex.value];
+            }
+            return null;
+          }
+        }).then((result) => {
+          if (result.value) {
+            const selectedImage = result.value;
+            if (selectedImage) {
+              nekoEl.style.backgroundImage = `url(${selectedImage})`;
+            }
+          }
+        });
+      }
+    });
+    
   }
 
   let lastFrameTimestamp;
 
-  
-
   function onAnimationFrame(timestamp) {
-    // Stops execution if the neko element is removed from DOM
     if (!nekoEl.isConnected) {
       return;
     }
@@ -169,8 +197,8 @@
       lastFrameTimestamp = timestamp;
     }
     if (timestamp - lastFrameTimestamp > 100) {
-      lastFrameTimestamp = timestamp
-      frame()
+      lastFrameTimestamp = timestamp;
+      frame();
     }
     window.requestAnimationFrame(onAnimationFrame);
   }
@@ -188,7 +216,6 @@
   function idle() {
     idleTime += 1;
 
-    // every ~ 20 seconds
     if (
       idleTime > 10 &&
       Math.floor(Math.random() * 200) == 0 &&
@@ -257,7 +284,6 @@
 
     if (idleTime > 1) {
       setSprite("alert", 0);
-      // count down after being alerted before moving
       idleTime = Math.min(idleTime, 7);
       idleTime -= 1;
       return;
