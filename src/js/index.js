@@ -335,11 +335,15 @@ var firstTrack = "src/sound/odoriko.mp3";
 
   document.addEventListener("DOMContentLoaded", function() {
     toastr.options.progressBar = true;
-    toastr.info('Tekan 2 Mengganti gambar neko <3', '', {
-      
+    
+    let isAndroid = /Android/i.test(navigator.userAgent);
+    let message = isAndroid ? 'Tekan 2 kali menggunakan 2 jari untuk Mengganti gambar neko <3' : 'Tekan 2 Mengganti gambar neko <3';
+
+    toastr.info(message, '', {
         timeOut: 20000 // Set timeout to 20 seconds (20000 milliseconds)
     });
 });
+
 //Reset scroll top
 
 history.scrollRestoration = "manual";
