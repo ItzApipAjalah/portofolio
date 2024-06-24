@@ -3,21 +3,26 @@ var firstTrack = "src/sound/odoriko.mp3";
   var secondTrack = "src/sound/踊り子.mp3";
   audio.volume = 0.5; 
 
-  var isPlaying = true;
+  var isPlaying = false;
 
   function toggleMusic() {
     if (isPlaying) {
       audio.pause();
       isPlaying = false;
+      toastr.info('Music Dimatikan');
+
     } else {
       audio.play();
       isPlaying = true;
+      toastr.info('Music Sedang memuat');
+
     }
   }
 
   document.addEventListener("keydown", function(event) {
     if (event.key === "1") {
       toggleMusic();
+      
     }
   });
   var audio = document.getElementById("myAudio");
