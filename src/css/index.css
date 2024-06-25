@@ -64,7 +64,6 @@
     background-size: cover;
     transition: filter 0.5s ease; /* Efek transisi untuk perubahan filter */
 }
-/* Container style for the map */
 #location-map {
     position: relative;
     width: 100%;
@@ -78,7 +77,22 @@
 #location-map iframe {
     width: 100%;
     height: 100%;
-    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the overlay text */
+#location-map .overlay-text {
+    position: absolute;
+    top: 10px; /* Adjust position as needed */
+    right: 10px; /* Adjust position as needed */
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: shadow effect */
 }
 .blur {
     filter: blur(3px); /* Menggunakan efek blur */

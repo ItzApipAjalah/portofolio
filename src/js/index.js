@@ -214,7 +214,7 @@ function fetchLocationAndUpdateMap() {
           const mapEmbedUrl = `https://www.google.com/maps?q=${latitude},${longitude}&output=embed`;
 
           // Update the location-map div with embedded map
-          document.getElementById('location-map').innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen loading="lazy" src="${mapEmbedUrl}"></iframe>`;
+          document.getElementById('location-map').innerHTML += `<iframe frameborder="0" style="border:0;" allowfullscreen loading="lazy" src="${mapEmbedUrl}"></iframe>`;
       })
       .catch(error => console.error('Error fetching location data:', error));
 }
