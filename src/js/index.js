@@ -200,6 +200,30 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(setBackgroundBasedOnTime, 100);
 });
 
+function fetchLocationAndUpdateMap() {
+  fetch('https://perpus.amwp.website/api/maps')
+      .then(response => response.json())
+      .then(data => {
+          // Extract coordinates from the maps_url
+          const mapsUrl = data.maps_url;
+          const coordinates = mapsUrl.match(/q=([-0-9.]+),([-0-9.]+)/);
+          const latitude = parseFloat(coordinates[1]);
+          const longitude = parseFloat(coordinates[2]);
+          
+          // Generate Google Maps embed URL
+          const mapEmbedUrl = `https://www.google.com/maps?q=${latitude},${longitude}&output=embed`;
+
+          // Update the location-map div with embedded map
+          document.getElementById('location-map').innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen loading="lazy" src="${mapEmbedUrl}"></iframe>`;
+      })
+      .catch(error => console.error('Error fetching location data:', error));
+}
+
+// Fetch and update location initially
+fetchLocationAndUpdateMap();
+
+// Update location and map every 1 minute
+setInterval(fetchLocationAndUpdateMap, 60000); // 60000 milliseconds = 1 minute
 
 
 document.body.style.overflow = 'hidden';

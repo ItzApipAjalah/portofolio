@@ -64,7 +64,22 @@
     background-size: cover;
     transition: filter 0.5s ease; /* Efek transisi untuk perubahan filter */
 }
+/* Container style for the map */
+#location-map {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+}
 
+/* Style for the iframe */
+#location-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 .blur {
     filter: blur(3px); /* Menggunakan efek blur */
 }
