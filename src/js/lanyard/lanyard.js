@@ -39,7 +39,7 @@ function updateData() {
         }
 
         // Update avatar image
-        const avatarUrl = `https://api.lanyard.rest/${avatarId}.gif`;
+        const avatarUrl = `https://api.lanyard.rest/${avatarId}.jpg`;
         iconElement.setAttribute("src", avatarUrl);
 
         if (listeningToSpotify) {
