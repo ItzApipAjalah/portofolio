@@ -150,14 +150,14 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 
-document.getElementById('cv').addEventListener('click', function () {
-  Swal.fire({
-      imageUrl: '../../src/image/CV/CV.jpg', 
-      imageAlt: 'Gambar',
-      showCloseButton: true, 
-      footer: '<a href="../../src/image/CV/CV.pdf" download>Download CV</a>'
-  });
-});
+// document.getElementById('cv').addEventListener('click', function () {
+//   Swal.fire({
+//       imageUrl: '../../src/image/CV/CV.jpg', 
+//       imageAlt: 'Gambar',
+//       showCloseButton: true, 
+//       footer: '<a href="../../src/image/CV/CV.pdf" download>Download CV</a>'
+//   });
+// });
 
 
 
